@@ -83,8 +83,8 @@ export function DashboardView({ clientId, dateRange, accent, showBenchmarks, spe
 
   return (
     <div>
-      <PeriodNote clientId={clientId} dateRange={dateRange} accent={accent} />
-      <AnnotationLayer clientId={clientId} dateRange={dateRange} accent={accent} />
+      <PeriodNote clientId={clientId} dateRange={dateRange} accent={accent} periodKey={periodKey} />
+      <AnnotationLayer clientId={clientId} dateRange={dateRange} accent={accent} periodKey={periodKey} />
 
       <SecHead title="Performance Overview" sub={`${dateRange} · month-by-month`} accent={accent} tip="Revenue from HubSpot Deals API by month." />
 
