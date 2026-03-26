@@ -35,7 +35,7 @@ export default function NewClientPage() {
       router.push(`/admin/clients/${client.id}`);
     } else {
       const d = await res.json().catch(() => ({}));
-      setError(d.error ?? "Failed to create client");
+      setError(typeof d.error === "string" ? d.error : "Failed to create client");
       setLoading(false);
     }
   };
@@ -67,13 +67,30 @@ export default function NewClientPage() {
 
           <div style={{ marginBottom: 18 }}>
             <label style={{ fontSize: 12, fontWeight: 600, color: "#555", display: "block", marginBottom: 8 }}>Brand Color</label>
-            <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+            <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 10 }}>
               {ACCENT_COLORS.map(c => (
                 <div key={c} onClick={() => setForm(f => ({ ...f, primaryColor: c }))}
                   style={{ width: 32, height: 32, borderRadius: 8, background: c, cursor: "pointer", border: form.primaryColor === c ? "3px solid #1a1a1a" : "3px solid transparent", transition: "border 0.1s" }} />
               ))}
               <input type="color" value={form.primaryColor} onChange={e => setForm(f => ({ ...f, primaryColor: e.target.value }))}
                 style={{ width: 32, height: 32, borderRadius: 8, border: "1px solid #eee", cursor: "pointer", padding: 0 }} />
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <div style={{ width: 20, height: 20, borderRadius: 4, background: form.primaryColor, border: "1px solid #eee", flexShrink: 0 }} />
+              <input
+                value={form.primaryColor}
+                onChange={e => {
+                  const val = e.target.value;
+                  if (/^#[0-9A-Fa-f]{0,6}$/.test(val)) setForm(f => ({ ...f, primaryColor: val }));
+                }}
+                onBlur={e => {
+                  if (!/^#[0-9A-Fa-f]{6}$/.test(e.target.value)) setForm(f => ({ ...f, primaryColor: "#6C3483" }));
+                }}
+                placeholder="#6C3483"
+                maxLength={7}
+                style={{ width: 100, padding: "6px 10px", border: "1px solid #e0e0e0", borderRadius: 8, fontSize: 13, fontFamily: "monospace", outline: "none" }}
+              />
+              <span style={{ fontSize: 11, color: "#aaa" }}>Enter any hex code</span>
             </div>
           </div>
 

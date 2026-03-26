@@ -33,7 +33,7 @@ export async function GET(req: NextRequest) {
 const CreateSchema = z.object({
   name: z.string().min(1),
   industry: z.string().default(""),
-  logoInitials: z.string().max(2).default(""),
+  logoInitials: z.string().max(3).default(""),
   primaryColor: z.string().default("#1A5276"),
   secondaryColor: z.string().default("#154360"),
   accentColor: z.string().default("#7FB3D3"),
