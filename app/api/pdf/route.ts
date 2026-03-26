@@ -14,8 +14,9 @@ export async function POST(req: NextRequest) {
 
   const { clientName, dateRange, sections, chartImages, kpis, pages, spend } = await req.json();
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const buffer = await renderToBuffer(
-    React.createElement(ReportDocument, {
+    React.createElement(ReportDocument as any, {
       clientName: clientName ?? "Client",
       dateRange: dateRange ?? "MTD",
       sections: sections ?? [],

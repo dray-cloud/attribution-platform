@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { SessionProvider } from "@/components/layout/SessionProvider";
+import SessionProvider from "@/components/layout/SessionProvider";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth/config";
 
