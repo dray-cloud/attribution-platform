@@ -161,7 +161,7 @@ export default function DashboardShell({ clients, activeClient, initialSpend }: 
     }
   };
 
-  const viewProps = { clientId, dateRange, compare, accent, showBenchmarks, viewMode, setViewMode, attrModel, pageFilter, setPageFilter: (v: string) => setPageFilter(v as PageFilter), setAttrModel, spend };
+  const viewProps = { clientId, dateRange, compare, accent, showBenchmarks, viewMode, setViewMode: (v: string) => setViewMode(v), attrModel, pageFilter, setPageFilter: (v: string) => setPageFilter(v as PageFilter), setAttrModel: (v: string) => setAttrModel(v as AttrModel), spend };
 
   return (
     <div style={{ fontFamily: "'DM Sans','Helvetica Neue',sans-serif", background: "#f4f4f2", minHeight: "100vh" }}>
