@@ -8,11 +8,6 @@ export const authOptions: NextAuthOptions = {
     HubspotProvider({
       clientId: process.env.HUBSPOT_CLIENT_ID!,
       clientSecret: process.env.HUBSPOT_CLIENT_SECRET!,
-      authorization: {
-        params: {
-          scope: "openid email profile",
-        },
-      },
     }),
   ],
   session: { strategy: "jwt" },
