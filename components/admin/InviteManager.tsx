@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 
-interface Invite { id: string; email: string; notes: string | null; createdAt: string; invitedBy: string | null; }
+interface Invite { id: string; email: string; notes: string | null; createdAt: string; }
 
 export function InviteManager({ accent }: { accent: string }) {
   const [invites, setInvites] = useState<Invite[]>([]);
@@ -24,8 +24,8 @@ export function InviteManager({ accent }: { accent: string }) {
       body: JSON.stringify({ email: email.trim(), notes: notes.trim() || null }),
     });
     if (res.ok) {
-      const invite = await res.json();
-      setInvites(prev => [...prev, invite]);
+      const updated = await fetch("/api/invites").then(r => r.json());
+      setInvites(Array.isArray(updated) ? updated : []);
       setEmail("");
       setNotes("");
       setAdding(false);
@@ -36,7 +36,9 @@ export function InviteManager({ accent }: { accent: string }) {
   };
 
   const handleRemove = async (id: string) => {
-    const res = await fetch("/api/invites", { method: "DELETE", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id }) });
+    const inv = invites.find(i => i.id === id);
+    if (!inv) return;
+    const res = await fetch(`/api/invites?email=${encodeURIComponent(inv.email)}`, { method: "DELETE" });
     if (res.ok) setInvites(prev => prev.filter(i => i.id !== id));
   };
 

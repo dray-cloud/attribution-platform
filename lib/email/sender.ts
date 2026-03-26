@@ -1,8 +1,5 @@
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.EMAIL_API_KEY);
-const FROM = process.env.EMAIL_FROM ?? "alerts@yourdomain.com";
-
 export interface AlertEmailOptions {
   to: string;
   subject: string;
@@ -45,8 +42,10 @@ export async function sendAlertEmail(opts: AlertEmailOptions): Promise<void> {
 </body>
 </html>`;
 
+  const resend = new Resend(process.env.EMAIL_API_KEY);
+  const from = process.env.EMAIL_FROM ?? "alerts@yourdomain.com";
   await resend.emails.send({
-    from: FROM,
+    from,
     to: opts.to,
     subject: opts.subject,
     html,
