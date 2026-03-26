@@ -13,9 +13,10 @@ export async function POST(req: NextRequest) {
   if (!clientId) return NextResponse.json({ error: "clientId required" }, { status: 400 });
 
   const state = signState(clientId);
+  const origin = process.env.NEXTAUTH_URL ?? `${req.nextUrl.protocol}//${req.headers.get("host")}`;
   const params = new URLSearchParams({
     client_id: process.env.HUBSPOT_CLIENT_PORTAL_ID!,
-    redirect_uri: `${process.env.NEXTAUTH_URL}/api/hubspot/callback`,
+    redirect_uri: `${origin}/api/hubspot/callback`,
     scope: "contacts deals content crm.objects.contacts.read crm.objects.deals.read",
     state,
   });
