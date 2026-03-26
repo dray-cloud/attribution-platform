@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const buffer = await renderToBuffer(
-    React.createElement(ReportDocument as any, {
+    React.createElement(ReportDocument, {
       clientName: clientName ?? "Client",
       dateRange: dateRange ?? "MTD",
       sections: sections ?? [],
@@ -24,7 +24,8 @@ export async function POST(req: NextRequest) {
       kpis: kpis ?? {},
       pages: pages ?? [],
       spend: spend ?? { services: 0, hubspot: 0, ads: 0 },
-    })
+      accent: "#6C3483",
+    }) as any
   );
 
   return new NextResponse(buffer, {
